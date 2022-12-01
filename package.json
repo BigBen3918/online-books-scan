@@ -46,5 +46,14 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "@pmndrs/branding": "^0.0.8",
+        "@react-three/drei": "^9.46.0",
+        "@react-three/fiber": "^8.9.1",
+        "@types/three": "^0.146.0",
+        "lamina": "^1.1.23",
+        "maath": "^0.4.2",
+        "three": "^0.147.0"
     }
 }

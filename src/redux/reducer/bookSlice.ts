@@ -1,27 +1,27 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import { Action } from "../../services";
 
 const initialState = {
     books: [],
     valueSearch: "",
-    category: "all",
-    sort: "relevance",
-    maxResults: 10,
+    category: "",
+    sort: "",
+    maxResults: 0,
     loading: false,
-    error: null,
 };
 
 export const getBooks: any = createAsyncThunk(
     "books/getBooks",
     async (data: any) => {
         const { valueSearch, category, sort, maxResults } = data;
-        console.log(data);
         try {
-            const response: AxiosResponse = await axios.get("volumes", {
+            const response: AxiosResponse = await Action.get("volumes", {
                 params: {
                     q: valueSearch + category,
                     orderBy: sort,
                     maxResults: maxResults,
+                    startIndex: 1,
                 },
             });
 
@@ -60,7 +60,6 @@ const bookSlice = createSlice({
                 (state, actions: PayloadAction<any>) => {
                     state.loading = false;
                     state.books = actions.payload;
-                    console.log(state.books);
                 }
             )
             .addCase(getBooks.rejected, (state) => {
