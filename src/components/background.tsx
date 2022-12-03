@@ -7,7 +7,7 @@ export default function Background() {
     return (
         <Canvas
             camera={{ position: [0, 0, 1] }}
-            style={{ position: "absolute" }}
+            style={{ position: "absolute", zIndex: -1, top: 0, left: 0 }}
         >
             <Stars />
         </Canvas>

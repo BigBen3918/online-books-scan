@@ -6,16 +6,20 @@ import Background from "./components/background";
 import "./style/global.css";
 
 // Main Components
+import Header from "./components/header";
 import Main from "./view/main";
 
 function App() {
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Main />} />
-            </Routes>
-            <Background />
-        </Router>
+        <div className="relative h-[100vh]">
+            <Router>
+                <Header />
+                <Routes>
+                    <Route path="/" element={<Main />} />
+                </Routes>
+                <Background />
+            </Router>
+        </div>
     );
 }
 
