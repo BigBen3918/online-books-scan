@@ -1,25 +1,23 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getBooks } from "../redux/reducer/bookSlice";
+import {
+    getBooks,
+    booksCategory,
+    booksIndex,
+    booksSearch,
+    booksSort,
+} from "../redux/reducer/bookSlice";
 import Card from "./components/card";
 
 function Main() {
     const dispatch = useDispatch();
-    const { books } = useSelector((state: any) => state.book);
-
-    React.useEffect(() => {
-        console.log(books);
-    }, [books]);
+    const { valueSearch, category, sort, maxResults } = useSelector(
+        (state: StateObject) => state.books
+    );
+    const { books } = useSelector((state: StateObject) => state.books);
 
     const handleClick = async () => {
-        dispatch(
-            getBooks({
-                valueSearch: "",
-                category: "all",
-                sort: "relevance",
-                maxResults: 10,
-            })
-        );
+        dispatch(getBooks({ valueSearch, category, sort, maxResults }));
     };
 
     return (
@@ -33,12 +31,17 @@ function Main() {
                                 id="street-address"
                                 placeholder="Search..."
                                 className="mt-1 w-full rounded-md bg-transparent border border-purple-500 shadow-sm focus:border-purple-700 focus:outline-none text-[20px] p-2"
+                                value={valueSearch}
+                                onChange={(e: any) =>
+                                    dispatch(booksSearch(e.target.value))
+                                }
                             />
                         </div>
                         <div className="col-span-6 sm:col-span-2 md:col-span-1">
                             <button
                                 type="button"
                                 className="text-white text-[20px] font-bold bg-purple-500 hover:bg-purple-800 ring-2 ring-purple-400 outline-none rounded-lg w-full h-full flex items-center justify-center"
+                                onClick={handleClick}
                             >
                                 <svg
                                     className="mr-2 -ml-1 w-5 h-5"
@@ -68,14 +71,18 @@ function Main() {
                             <select
                                 id="country"
                                 className="mt-1 w-full bg-purple-900 text-[20px] rounded-md border border-purple-500 py-2 px-3 shadow-sm focus:outline-none focus:ring-purple-500 text-white-300"
+                                value={category}
+                                onChange={(e: any) =>
+                                    dispatch(booksCategory(e.target.value))
+                                }
                             >
-                                <option>All</option>
-                                <option>Art</option>
-                                <option>Biography</option>
-                                <option>Computers</option>
-                                <option>History</option>
-                                <option>Medical</option>
-                                <option>Poetry</option>
+                                <option value={"1"}>All</option>
+                                <option value={"2"}>Art</option>
+                                <option value={"3"}>Biography</option>
+                                <option value={"4"}>Computers</option>
+                                <option value={"5"}>History</option>
+                                <option value={"6"}>Medical</option>
+                                <option value={"7"}>Poetry</option>
                             </select>
                         </div>
                         <div className="col-span-6 sm:col-span-3 lg:col-span-2 w-full">
@@ -88,9 +95,13 @@ function Main() {
                             <select
                                 id="country"
                                 className="mt-1 w-full bg-purple-900 text-[20px] rounded-md border border-purple-500 py-2 px-3 shadow-sm focus:outline-none focus:ring-purple-500 text-white-300"
+                                value={sort}
+                                onChange={(e: any) =>
+                                    dispatch(booksSort(e.target.value))
+                                }
                             >
-                                <option>Relevance</option>
-                                <option>Newest</option>
+                                <option value="relevance">Relevance</option>
+                                <option value="newest">Newest</option>
                             </select>
                         </div>
                         <div className="col-span-6 sm:col-span-6 lg:col-span-2 w-full">
@@ -107,6 +118,10 @@ function Main() {
                                 max={40}
                                 placeholder="counts..."
                                 className="mt-1 w-full rounded-md bg-transparent border border-purple-500 shadow-sm focus:border-purple-700 focus:outline-none text-[20px] p-2"
+                                value={maxResults}
+                                onChange={(e: any) =>
+                                    dispatch(booksIndex(e.target.value))
+                                }
                             />
                         </div>
                     </div>
@@ -114,8 +129,19 @@ function Main() {
             </div>
 
             <div className="grid grid-cols-6 sm:grid-cols-12 gap-6 w-full mt-3">
-                {new Array(15).fill(0).map((item, index: number) => (
-                    <Card key={index} />
+                {books.map((item: any, index: number) => (
+                    <Card
+                        key={index}
+                        thumbnail={item?.volumeInfo?.imageLinks?.thumbnail}
+                        title={item.volumeInfo.title}
+                        authors={item.volumeInfo.authors}
+                        language={item.volumeInfo.language}
+                        description={item.volumeInfo.description}
+                        infoLink={item.volumeInfo.infoLink}
+                        publishedDate={item.volumeInfo.publishedDate}
+                        publisher={item.volumeInfo.publisher}
+                        pageCount={item.volumeInfo.pageCount}
+                    />
                 ))}
             </div>
         </div>

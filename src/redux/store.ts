@@ -3,6 +3,6 @@ import { bookReducer } from "./reducer";
 
 export const store = configureStore({
     reducer: {
-        book: bookReducer,
+        books: bookReducer,
     },
 });

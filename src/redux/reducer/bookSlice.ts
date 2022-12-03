@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import { Action } from "../../services";
 
-const initialState = {
+const initialState: StateObject = {
     books: [],
     valueSearch: "",
-    category: "",
-    sort: "",
-    maxResults: 0,
+    category: "1",
+    sort: "relevance",
+    maxResults: 10,
     loading: false,
 };
 
