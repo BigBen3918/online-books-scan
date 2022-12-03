@@ -12,3 +12,16 @@ body {
     background-color: #12071f;
     color: white;
 }
+
+.header-title {
+    align-self: center;
+    font-size: 35px;
+    font-weight: bold;
+    white-space: nowrap;
+    color: rgba(182, 109, 255, 0.8);
+    text-shadow: 1px 0.5px 1px #5d3a81cc, 1px 1px 1px #5d3a81cc,
+        1px 1.5px 1px #5d3a81cc, 1px 2px 1px #5d3a81cc, 1px 2.5px 1px #5d3a81cc,
+        1px 3px 1px #5d3a81cc, 1px 3.5px 1px #5d3a81cc, 1px 4px 1px #5d3a81cc,
+        1px 9px 6px rgba(16, 16, 16, 0.4), 1px 10px 10px rgba(16, 16, 16, 0.2),
+        1px 12px 35px rgba(16, 16, 16, 0.2), 1px 13px 60px rgba(16, 16, 16, 0.4);
+}
