@@ -2,7 +2,17 @@ import React from "react";
 
 function Card(props: BooksObject) {
     const [modalOpen, setModalOpen] = React.useState(false);
-    const { thumbnail, title, authors } = props;
+    const {
+        thumbnail,
+        title,
+        authors,
+        description,
+        infoLink,
+        language,
+        pageCount,
+        publishedDate,
+        publisher,
+    } = props;
 
     return (
         <>
@@ -18,7 +28,7 @@ function Card(props: BooksObject) {
                 />
                 <div className="p-5">
                     <h5 className="mb-2 text-xl font-bold tracking-tight text-white-900">
-                        {title.length > 35 ? title.slice(0, 35) + "..." : title}
+                        {title.length > 30 ? title.slice(0, 30) + "..." : title}
                     </h5>
                     <button
                         data-modal-toggle="defaultModal"
@@ -66,23 +76,48 @@ function Card(props: BooksObject) {
                                         </svg>
                                     </button>
                                 </div>
-                                <div className="modal-body relative p-4 text-black">
-                                    <p>This is a vertically centered modal.</p>
+                                <div className="relative flex flex-col justify-center items-center p-4 text-black ">
+                                    <div className="flex justify-center items-center flex-col sm:flex-row w-full">
+                                        <div className="flex-1 flex justify-center items-center">
+                                            <img
+                                                src={thumbnail}
+                                                alt=""
+                                                className="h-full object-cover"
+                                            />
+                                        </div>
+                                        <div className="flex-1">
+                                            <p>
+                                                <b>Authors:</b> {authors}
+                                            </p>
+                                            <p>
+                                                <b>Language:</b> {language}
+                                            </p>
+                                            <p>
+                                                <b>PageCount:</b> {pageCount}
+                                            </p>
+                                            <p>
+                                                <b>PublishedDate:</b>{" "}
+                                                {publishedDate}
+                                            </p>
+                                            <p>
+                                                <b>Publisher:</b> {publisher}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p className="mt-5 h-[250px] overflow-scroll w-full overflow-x-hidden border border-purple-600 p-2">
+                                        {description
+                                            ? description
+                                            : "No description"}
+                                    </p>
                                 </div>
                                 <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                                    <button
-                                        type="button"
-                                        className="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
-                                        onClick={() => setModalOpen(false)}
-                                    >
-                                        Close
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1"
+                                    <a
+                                        href={infoLink}
+                                        className="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1"
+                                        target={"_blank"}
                                     >
                                         Link
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

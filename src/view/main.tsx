@@ -11,7 +11,7 @@ import Card from "./components/card";
 
 function Main() {
     const dispatch = useDispatch();
-    const { valueSearch, category, sort, maxResults } = useSelector(
+    const { valueSearch, category, sort, maxResults, loading } = useSelector(
         (state: StateObject) => state.books
     );
     const { books } = useSelector((state: StateObject) => state.books);
@@ -38,27 +38,51 @@ function Main() {
                             />
                         </div>
                         <div className="col-span-6 sm:col-span-2 md:col-span-1">
-                            <button
-                                type="button"
-                                className="text-white text-[20px] font-bold bg-purple-500 hover:bg-purple-800 ring-2 ring-purple-400 outline-none rounded-lg w-full h-full flex items-center justify-center"
-                                onClick={handleClick}
-                            >
-                                <svg
-                                    className="mr-2 -ml-1 w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
+                            {loading ? (
+                                <button
+                                    type="button"
+                                    className="text-white text-[20px] font-bold bg-purple-500 hover:bg-purple-800 ring-2 ring-purple-400 outline-none rounded-lg w-full h-full flex items-center justify-center disabled:bg-gray-700 disabled:ring-gray-500"
+                                    disabled
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                    ></path>
-                                </svg>
-                                Submit
-                            </button>
+                                    <svg
+                                        className="mr-2 -ml-1 w-5 h-5"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                        ></path>
+                                    </svg>
+                                    Submit
+                                </button>
+                            ) : (
+                                <button
+                                    type="button"
+                                    className="text-white text-[20px] font-bold bg-purple-500 hover:bg-purple-800 ring-2 ring-purple-400 outline-none rounded-lg w-full h-full flex items-center justify-center"
+                                    onClick={handleClick}
+                                >
+                                    <svg
+                                        className="mr-2 -ml-1 w-5 h-5"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                        ></path>
+                                    </svg>
+                                    Submit
+                                </button>
+                            )}
                         </div>
 
                         <div className="col-span-6 sm:col-span-3 lg:col-span-2 w-full">
@@ -70,7 +94,7 @@ function Main() {
                             </label>
                             <select
                                 id="country"
-                                className="mt-1 w-full bg-purple-900 text-[20px] rounded-md border border-purple-500 py-2 px-3 shadow-sm focus:outline-none focus:ring-purple-500 text-white-300"
+                                className="mt-1 w-full bg-purple-900 text-[20px] rounded-md border border-purple-500 py-2 px-3 shadow-sm focus:outline-none text-white-300"
                                 value={category}
                                 onChange={(e: any) =>
                                     dispatch(booksCategory(e.target.value))
@@ -128,22 +152,28 @@ function Main() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-6 sm:grid-cols-12 gap-6 w-full mt-3">
-                {books.map((item: any, index: number) => (
-                    <Card
-                        key={index}
-                        thumbnail={item?.volumeInfo?.imageLinks?.thumbnail}
-                        title={item.volumeInfo.title}
-                        authors={item.volumeInfo.authors}
-                        language={item.volumeInfo.language}
-                        description={item.volumeInfo.description}
-                        infoLink={item.volumeInfo.infoLink}
-                        publishedDate={item.volumeInfo.publishedDate}
-                        publisher={item.volumeInfo.publisher}
-                        pageCount={item.volumeInfo.pageCount}
-                    />
-                ))}
-            </div>
+            {loading ? (
+                <div className="flex justify-center items-center mt-[100px]">
+                    <span className="loader col-span-6"></span>
+                </div>
+            ) : (
+                <div className="grid grid-cols-6 sm:grid-cols-12 gap-6 w-full mt-3">
+                    {books.map((item: any, index: number) => (
+                        <Card
+                            key={index}
+                            thumbnail={item?.volumeInfo?.imageLinks?.thumbnail}
+                            title={item.volumeInfo.title}
+                            authors={item.volumeInfo.authors}
+                            language={item.volumeInfo.language}
+                            description={item.volumeInfo.description}
+                            infoLink={item.volumeInfo.infoLink}
+                            publishedDate={item.volumeInfo.publishedDate}
+                            publisher={item.volumeInfo.publisher}
+                            pageCount={item.volumeInfo.pageCount}
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
